@@ -133,16 +133,8 @@ int main() {
     }
     
 3、对于长度为n的顺序表L，编写一个时间复杂度为O(n),空间复杂度为O(1)的算法，该算法删除线性表中所有值为x的数据元素
-    void Del_x1 (SqList &L,int x){    //法1  O(n^2)
-        for(int i=0;i<L.length-1;i++){
-            if(L.data[i]==x){
-                L.data[i]=L.data[i+1];
-                L.length--;
-            }
-        }
-    }
     
-    void Del_x2 (SqList &L,int x){    //法2,k用于统计不等于x的个数
+    void Del_x2 (SqList &L,int x){    //法1,k用于统计不等于x的个数
         int k=0;
         for(int i=0;i<L.length;i++ ){
             if(L.data[i]!=x){
@@ -153,7 +145,7 @@ int main() {
         L.length=k;
     }
     
-    void Del_x3 (SqList &L,int x){    //法3，k用于统计等于x的个数
+    void Del_x3 (SqList &L,int x){    //法2，k用于统计等于x的个数
         int k=0;
         for(int i=0;i<L.length;i++ ){
             if(L.data[i]==k)    K++;
