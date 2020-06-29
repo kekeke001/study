@@ -104,6 +104,19 @@ LinkList Reverse(LinkList L){//头插法
 	returnL;	
 }
 
+LinkList Reverse(LinkList L){//法2
+	LNode *pre;
+	LNode *p=L->next;
+	LNode *r=p->next;
+	p->next=NULL;
+	while(r!=NULL)
+		pre=p;
+		p=r;
+		r=r->next;
+		p->next=pre;
+	L->next=p;
+	return L;
+}
 
 
 
