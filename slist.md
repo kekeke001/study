@@ -186,20 +186,7 @@ int main() {
 
 6、从有序顺序表中删除其值重复的元素，使表中的所有元素均不相同
 ```c
-    void Del_Dupli(SqList &L){
-        int k=0;
-        a=L.data[0];
-        for(int i=1;i<L.length;i++){
-            if (L.data[i]!=a)  a=L.data[i];
-            else{
-                for(int j=i;j<L.length-1;j++)
-                    L.data[j]=L.data[j+1];
-                    L.length--;
-            }
-        }
-    }
-    
-    bool Del_Same(SqList &L){            //法2
+    bool Del_Same(SqList &L){            
         if (L.length==0)    return false;
         for(int i=0,j=1;j<L.length;j++){
             if (L.data[i]!=L.data[j])
@@ -233,21 +220,18 @@ int main() {
 8、已知在一维数组A[m+n]中依次存放两个线性表（a1，a2，a3，...,am）和（b1，b2，b3,...,bn)。试编写一个函数，将数组中两个顺序表位置互换，即将(b1,b2,b3,...,bn)放在（a1，a2，a3,...,am）的前面
 
 ```c
-    void changepos(int A[],int &c[], m, n){//法一
-        for (i=0;i<n;i++)
-            c[i]=A[i+m];
-        for(i=n;i<m+n;i++)
-            c[i]=A[i-n];
 
     typedef int datatype;
-    void Reverse(int A[],int left,int right,int arraysize){
+    bool Reverse(int A[],int left,int right,int arraysize){
         int mid=(left+right)/2;
         if (left >= right || right >=arraysize)
+            return false;
         for(int i=0;i<=mid -left;i++){
-            int temp=a[left+i];
-            a[left+i]=a[right-i];
-            a[right-i]=temp;
+            int temp=A[left+i];
+            A[left+i]=A[right-i];
+            A[right-i]=temp;
         }
+        return true;
     }
     void Exchange(int A[],int m,int n,int arraysize){
         Reverse(A,0,m+n-1,arraysize);
@@ -258,22 +242,21 @@ int main() {
 
 9、线性表(a1,a2,...,an)中的元素递增且有序，按顺序存储在计算机中。要求设计一个算法，完成用最少的时间在表中查找数值为x的元素，若找到将其与后继元素位置交换，若找不到则将其插入表中并使表中的元素递增且有序
 ```c
-    void sqList(Sqlist &L，int x){
-        for(i=0;i<L.length;i++){
-            if (L.data[i]>=x)
-                j=i;
-                break;
-        }
-        if (L.data[j]==x){
-            temp=L.data[j+1];
-            L.data[j+1]=x;
-            L.data[j]=temp;
-            }
-        else 
-            for(int i=L.length;i>j;i--)
-                L.data[i]=L.data[i-1];
-            L.data[j]=x;
+    bool SearchExchange(SqList &L,int x){
+	if(L.length==0)
+		return false;
+	for(int i=0;i<L.length && L.data[i]<x;i++);
+	if(L.data[i]==x && i!=L.length-1)
+		temp=L.data[i];
+		L.data[i]=L.data[i+1];
+		L.data[i+1]=temp;
+	else
+		for(j=L.length;j>i;j--)
+			L.data[j]=L.data[j-1];
+		L.data[i]=x;
+	return true;
 }
+
 
     void SearchExchangeInsert(){//折半查找，效率最高
         int low=0,high=n-1,mid;//low,high分别指向顺序表的下界和上界下标
