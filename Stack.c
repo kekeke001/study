@@ -102,3 +102,13 @@ void InitStack(SqStack &S){
 }
 栈满：top0+1==top1
 
+栈的链式存储---后进先出
+
+//定义
+typedef struct Linknode{
+	int data;
+	struct Linknode *next;
+}*LiStack;
+
+入栈//头插法，将带头节点的一端作为栈顶
+
