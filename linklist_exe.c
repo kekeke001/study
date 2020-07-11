@@ -39,6 +39,7 @@ void DelX(LinkList &L,int x){//法2 尾插法建立单链表
 	while(p!=NULL)
 		if(p->data!=x)
 			r->next=p;
+			r=p;
 			p=p->next;
 		else 
 			q=p;
