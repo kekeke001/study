@@ -1,0 +1,81 @@
+1、I，O分别表示入栈和出栈操作，写出一个算法，判定所给的序列是否合法，如果合法返回true，否则返回false。(假定被判定的操作的操作序列已存入一维数组中)
+bool Judge(char A[]){
+	int j=k=0;
+	while(A[i]!='\0')  //‘\0’是字符串的结束符号，由编译器自动加上
+		switch(A[i]){
+			case 'I':j++;break;
+			case 'O':k++;
+				if(k>j)
+					printf("序列非法\n");
+					exit(0);
+		}
+		i++;
+	if(j!=k)
+		printf("序列非法\n");
+		return false;
+	else
+		printf("序列合法\n");
+		return true;
+}
+
+2、设单链表的表头指针为L，结点结构由data 和next两个域构成，其中data域为字符型，试设计算法判断该链表的全部n个字符是否中心对称，例如xyx，xyyx都是中心对称
+bool duicheng(LinkList L,int n){
+	LNode *p=L->next;
+	char s[n/2];
+	for(int i=0;i<n/2;i++)
+		s[i]=p->data;
+		p=p->next;
+	i--;
+	if(n%2==1)
+		p=p->next;
+	while(p && p->data==s[i])
+		i--;
+		p=p->next;
+	if(i==-1)
+		return true;
+	else
+		return false;
+}
+
+
+3、设有两个栈S1，S2都采用顺序栈方式，并共享一个存储区[0,...,maxsize-1],为了尽量利用空间，减少溢出的可能，可采用栈顶相向(相对方向)，迎面增长的存储方式，试设计S1，S2有关入栈和出栈的操作算法。
+# define MaxSize 10
+typedef struct{//定义
+	int data[MaxSize];
+	int top0;//0号栈顶指针
+	int top1;//1号栈顶指针
+}ShStack;
+ShStack S;
+void InitStack(ShStack &S){//初始化
+	S.top0=-1;
+	S.top1=MaxSize;
+}
+bool push(ShStack &S,int i,int x){//入栈,i为栈号
+	if(i<0 || i>1)//栈号不对
+		return false;
+	if(S.top0+1=S.top1)
+		return false;//栈满
+	switch(i){
+		case 0:s.data[++S.top0]=x; return 1;break;
+		case 1:s.data[--S.top1]=x; return 1;
+	}
+}
+
+bool pop(ShStack &S,int i){
+	if(i<0 || i>1)//栈号不对
+		return false;
+	switc(i){
+		case 0:
+			if(S.top0==-1)
+				return false;
+			else
+				return S.data[S.top0--];
+			break;
+		case 1:
+			if(S.top1==MaxSize)
+				return false;
+			else
+				return S.data[S.top1++];
+						
+	}
+}
