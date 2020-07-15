@@ -140,8 +140,8 @@ bool EnQueue(Stack &s1,Stack &s2,int e){
 		while(!StackEmpty(S1))
 			pop(s1,x);
 			push(s2,x);
-	push(s1,e);
-	return true;
+		push(s1,e);
+		return true;
 }
 
 
