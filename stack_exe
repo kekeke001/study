@@ -79,3 +79,87 @@ bool pop(ShStack &S,int i){
 						
 	}
 }
+
+4、若希望循环队列中的元素都能得到利用，则需要设置一个标志域tag，并以tag的值为0或者为1来区分队头指针front和队尾指针rear相同时队列是空还是满的算法，试编写与此节后相应的入队算法和出队算法
+# define MaxSize 50
+typedef struct{
+	int data[MaxSize];
+	int front,rear;//头，尾
+	int tag;//进队为1，出队为0
+}SqQueue;
+
+bool EnQueue(SqQueue &Q,int x){
+	if(Q.front == Q.rear && tag=1)
+		return false;//已满
+	Q.data[rear]=x
+	Q.rear=(Q.rear+1)%MaxSize;
+	Q.tag=1;
+	return true;
+}
+
+bool DeQueue(SqQueue &Q,int &x){
+	if(Q.front == Q.rear && tag=0)
+		return false;//空队列
+	x=Q.data[front]
+	Q.front=(Q.front+1)%MaxSize;
+	Q.tag=0;
+	return true;
+}
+
+5、Q是一个队列，S是一个空栈，实现将队列中元素逆置的算法
+void Invesre(Stack S,Queue Q){
+	while(!QueueEmpty(Q))
+		x=DeQueue(Q);
+		push(s,x);
+	while(!StackEmpty(S))
+		pop(S,x);
+		EnQueue(Q,x);
+}
+
+6、利用两个栈s1，s2来模拟一个队列，已知栈的4个运算定义如下：
+push(s,x); //入栈
+pop(s,x); //出栈
+StackEmpty(S); //判栈空
+StackOverflow(S);//判栈满
+如何利用栈的运算来实现队列的3个运算（形参由读者根据要求自己设计）
+EnQueue;//入队
+DeQueue;//出队
+QueueEmpty;//判空
+
+//思想：入队，用s1存放入队的元素;需要出队时,将s1的元素取出再存入s2，再取出s2
+//1、对s1进行入栈操作，若s1满，必须保证s2为空，才能将s1的元素全部插入s2
+//2、对s2的出栈左出队，s2为空，才能将s1的元素送进s2
+bool EnQueue(Stack &s1,Stack &s2,int e){
+	if(!StackOverflow(S1))//s1没满
+		push(s1,e);
+		return true;
+	if(StackOverflow(S1) && !StackEmpty(S2))//s1满，s2不为空
+		printf("队列满\n");
+		return false;
+	if(StackOverflow(S1) && StackEmpty(S2))//s1满，s2不为空
+		while(!StackEmpty(S1))
+			pop(s1,x);
+			push(s2,x);
+	push(s1,e);
+	return true;
+}
+
+
+bool DeQueue(Stack &s1,Stack &s2,int &x){
+	if(!StackEmpty(S2))
+		pop(s2,x);
+	else if(StackEmpty(S1))
+		printf("队列为空\n");
+	else 
+		while(!StackEmpty(S1))
+			pop(s1,x);
+			push(s2,x);
+	pop(s2,x);
+}
+
+bool QueueEmpty(Stack s1,Stack s2){
+	if(StackEmpty(s1) &&StackEmpty(s2))
+		return true;
+	else
+		return false;
+}
