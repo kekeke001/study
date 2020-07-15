@@ -404,6 +404,52 @@ void DelMin(LinkList &L){
 	free(L);
 }
 
+20、L-带头节点的非循环双向链表，每个节点还有一个访问频度域freq....
+DLinkList Locate(DLinkList &L,int x){
+	DNode *p=L->next;
+	DNode *q;
+	while(p && p->data!=x)
+		p=p->next;
+	if(!p)
+		prtintf("不存在x节点\n");
+		exit(0);
+	else
+		p->freq++;
+		if(p->next!=NULL)
+			p->next->pred=p->pred;
+		p->pred->next=p->next;
+		q=p->pred;
+		while(q!=L && q->freq<=p->fred)
+			q=q->fred;
+		p->next=q->next;
+		q->next->pred=p;
+		p->pred=q;
+		q->next=p;
+	return p;
+}
+20、L-带头节点的非循环双向链表，每个节点还有一个访问频度域freq....
+DLinkList Locate(DLinkList &L,int x){
+	DNode *p=L->next;
+	DNode *q;
+	while(p && p->data!=x)
+		p=p->next;
+	if(!p)
+		prtintf("不存在x节点\n");
+		exit(0);
+	else
+		p->freq++;
+		if(p->next!=NULL)
+			p->next->pred=p->pred;
+		p->pred->next=p->next;
+		q=p->pred;
+		while(q!=L && q->freq<=p->fred)
+			q=q->fred;
+		p->next=q->next;
+		q->next->pred=p;
+		p->pred=q;
+		q->next=p;
+	return p;
+}
 
 
 
