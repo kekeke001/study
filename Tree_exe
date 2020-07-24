@@ -1,0 +1,199 @@
+1、编写先序遍历二叉树的非递归算法
+void PreOrder(BiTree T){
+	BiTree p=T;
+	InitStack(S);
+	while(p || !IsEmpty(S))
+		if(p)
+			visit(p);
+			push(S,p);
+			p=p->lchild;
+		else
+			pop(S,p);
+			p=p->rchild;		
+}
+
+2、编写后序遍历二叉树的非递归算法
+void PostOrder(BiTree T){
+	BiTree p=T;
+	InitStack(S);
+	BiTNode *r=NULL;
+	while(p || !IsEmpty(S))
+		if(p)
+			push(S,p);
+			p=p->lchild;
+		else
+			GetTop(S,p);
+			if(p->rchild!=NULL && p->rchild!=r)
+				p=p->rchild;
+				push(S,p);
+				p=p->lchild;
+			else
+				pop(S,p);
+				visit(p);
+				r=p;
+				p=NULL;	
+}
+
+3、试给出二叉树的自下而上，从右到左的层次遍历算法
+void LevelOrder(BiTree T){
+	InitStack(S);
+	InitQueue(Q);
+	BiNode *p;
+	EnQueue(Q,T);
+	while(!IsEmpty(Q))
+		p=DeQueue(Q);
+		push(S,p);
+		if(p->lchild!=NULL)
+			EnQueue(Q,p->lchild)
+		if(p->rchild!=NULL)
+			EnQueue(Q,p->rchild)
+	while(!IsEmpty(S))	
+		pop(S,p);
+		visit(p);
+}
+
+4、假设二叉树采用二叉链表存储结构，设计一个非递归算法求二叉树的高度
+int Depth(BiTree T){
+	if(!T)
+		return 0;
+	int front=rear=-1;
+	int last=level=0;
+	BiTree Q[MaxSize];//队列Q，元素是二叉树的节点指针
+	Q[++rear]=T;
+	BiTree p;
+	while(front<rear)//队不空
+		p=Q[++front];
+		if(p->lchild)
+			Q[++rear]=p->lchild;
+		if(p->rchild)
+			Q[++rear]=p->rchild;
+		if(front==last)//处理该层的最右节点
+			level++;
+			last=rear;
+	return level;
+}
+递归算法
+int depth(BiTree T){
+	if(T==NULL)
+		return 0;
+	ldep=depth(T->lchild);
+	rdep=depth(T->rchild);
+	if(ldep>rdep)
+		return ldep+1;
+	else
+		return rdep+1;
+}
+
+5、设一棵二叉树中各个节点的值互不相同，其先序遍历序列和中序遍历序列分别存于两个一维数组A[1...n]和B[1...n]中，试编写算法建立该二叉树的二叉链表
+BiTree PreInCreat(int A[],int B[],int l1,int h1,int l2,int h2){
+	//l1,h1为先序的第一个节点和最后一个节点；l2,h2为中序的第一个节点和最后一个节点
+	int l1=l2=1;h1=h2=n;
+	root=(BiTNode *)malloc(sizeof(BiTNode));
+	root->data=A[l1];
+	for(i=l2;B[i]!=root->data;i++);
+	llen=i-l2;
+	rlen=h2-i;
+	if(llen)
+		root->lchild=PreInCreat(A,B,l1+1,l1+llen,l2,l2+llen-1);
+	else
+		root->lchild=NULL;
+	if(rlen)
+		root->rchild=PreInCreat(A,B,h1-rlen+1,h1,,h2-rlen+1,h2);
+	else
+		root->rchild=NULL;
+	return root;
+}
+
+6、二叉树按二叉链表形式存储，写一个判别给定二叉树是否是完全二叉树的算法
+bool IsComplete(BiTree T){
+	//按层次遍历，若空节点后有非空节点，则不是完全二叉树
+	InitQueue(Q);
+	if(!T)
+		return 1;//空树为满二叉树
+	EnQueue(Q,T);
+	while(!IsEmpty(Q))
+		DeQueue(Q,p);
+		if(p)
+			EnQueue(Q,p->lchild);
+			EnQueue(Q,p->rchild);
+		else
+			while(!IsEmpty(Q))
+				DeQueue(Q,p);
+				if(p)
+					return 0;
+			return 1;
+}
+
+7、假设二叉树采用二叉链表存储结构存储，试设计一个算法，计算一棵给定二叉树所有双分支节点个数
+int DsonNodes(BiTree b){
+	if(b==NULL)
+		return 0;
+	else if(b->rchild!=NULL && b->rchild!=NULL)
+		return DsonNodes(b->lchild)+DsonNodes(b->rchild)+1;
+	else
+		return DsonNodes(b->lchild)+DsonNodes(b->rchild);
+}
+
+8、设树B是一棵采用链式结构存储的二叉树，编写一个把树B中所有节点的左右子树进行交换的函数
+void swap(BiTree b){
+	if(b)
+		swap(b->lchild);//递归交换左子树
+		swap(b->rchild);
+		temp=b->lchild;//递归交换左右孩子
+		b->lchild=b->rchild;
+		b->rchild=temp;
+}
+
+9、假设二叉树采用二叉链表存储结构存储，设计一个算法，求先序遍历序列中第k(1<=k<=二叉树中节点个数)个节点的值
+int i=1;//遍历序号的全局变量
+int PreNode(BiTree b,int k){
+	if(b==NULL)
+		return '#';
+	if(i==k)
+		return b->data;
+	i++;
+	ch=PreNode(b->lchild,k);
+	if(ch!='#')
+		return ch;
+	ch=PreNode(b->rchild,k);
+		return ch;
+}
+
+10、已知二叉树以二叉链表存储，编写算法完成：对于树中每个元素值为x的节点，删去以它为根的子树，并释放相应的空间
+void DelXTree(BiTree b){//删除以b为根的子树-后序
+	if(b)
+		DelXTree(b->lchild);
+		DelXTree(b->rchild);
+		free(b);
+}
+void Search(BiTree b,int x){//层次遍历
+	BiTree Q[];
+	if(b)
+		if(b->data==x)
+			DelXTree(b);//若根节点为x,则删除整棵树
+		InitQueue(Q);
+		EnQueue(Q,b);
+		while(!IsEmpty(Q))//队不为空，则循环
+			DeQueue(Q,p);
+			if(p->lchild)
+				if(p->lchild->data==x)
+					DelXTree(p->lchild);
+					p->lchild=NULL;
+				else
+					EnQueue(Q,p->lchild);
+			if(p->rchild)
+				if(p->rchild->data==x)
+					DelXTree(p->rchild);
+					p->rchild=NULL;
+				else
+					EnQueue(Q,p->rchild);
+}
+
+
+
+
+
+
+
+
+
