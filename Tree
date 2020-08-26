@@ -329,6 +329,83 @@ void PostOrder(TreeNode *R){
 访问第一颗树的根节点
 中序遍历除去第一颗树之后剩余的树构成的森林
 
+//二叉排序树节点
+typedef struct BSTNode{
+	int key;
+	struct BSTNode *lchild,*rchild;
+}BSTNode,*BSTree
+
+//在二叉排序树中查找值为key的节点
+BSTNode *BST_Search(BSTree T,int key){
+	while(T!=NULL && key!=T->key)
+		if(key < T->key) T=T->lchild;
+		else T=T->rchild;
+	return T;
+}
+O(1)
+
+BSTNode *BST_Search(BSTree T,int key){
+	if(T==NULL)
+		return NULL;
+	if(key==T->key)
+		return T;
+	else if(key < T->key)
+		return BST_Search(T->lchild,key);
+	else
+		return BST_Search(T->rchild,key);
+}
+O(h)
+
+//二叉排序树插入
+int BST_Insert(BSTree &T,int k){
+	if(T==NULL)
+		T=(BSTree)malloc(sizeof(BSTNode));
+		T->key=key;
+		T->lchild=T->rchild=NULL;
+		return 1;
+	else if (k==T->key)
+		return 0;
+	else if(k<T->key)
+		return BST_Insert(T->lchild);
+	else
+		return BST_Insert(T->rchild);
+}
+
+//构造二叉排序树
+void Creat_BST(BiTree &T,keyType str[],int n){
+	T=NULL;
+	int i=0;
+	while(i<n)
+		BST_Insert(T,str[i]);
+		i++;
+}
+
+//对排序树进行中序遍历，可以得到一个递增的有序序列
+//删除节点
+1、若节点是叶子节点---直接删除
+2、若节点z只有一棵左子树或者右子树，则让z子树成为z父节点的子树，替代z的位置
+3、若节点z有左右两颗子树，则令z的直接后继（直接前驱）【用右子树中值最小的节点/左子树中值最大的节点--按照中序遍历】替代z，然后从二叉排序树中删去这个直接后继/前驱
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
